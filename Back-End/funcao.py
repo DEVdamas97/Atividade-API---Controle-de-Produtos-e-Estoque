@@ -23,4 +23,19 @@ def criar_tabela():
         finally:
             cursor.close()
             conexao.close()
-criar_tabela()
+
+
+def adicionar_produto(nome, categoria, preco, quantidade):
+    conexao, cursor = conectar()
+    if conexao:
+        try:
+            cursor.execute(
+                "INSERT INTO estoque (nome, categoria, preco, quantidade) VALUES (%s, %s, %s, %s)",
+                (nome, categoria, preco, quantidade)
+            )
+            conexao.commit()
+        except Exception as erro:
+            print(f"Erro ao inserir um produto: {erro}")
+        finally:
+            cursor.close()
+            conexao.close()
