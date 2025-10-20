@@ -9,7 +9,7 @@ st.header("**Gerenciador de Estoque 📦**")
 
 st.subheader("Bem-vindo ao sistema de gerenciamento de Estoque!")
 
-menu = st.sidebar.radio("Opções", ["Listar Produtos", "Adicionar Produto"])
+menu = st.sidebar.radio("Opções", ["Listar Produtos", "Adicionar Produto", "Atualizar Preço do Produto"])
 
 if menu == "Listar Produtos":
     st.subheader("Todos Produtos do estoque")
@@ -31,18 +31,36 @@ elif menu == "Adicionar Produto":
     nome = st.text_input("Digite o **Nome do Produto**: ")
     categoria = st.text_input("Digite a **Categoria do Produto**: ")
     preco = st.number_input("Digite o **Preço do Produto**: ", step=0.01)
-    avaliacao = st.number_input("Digite a avaliação (1 a 10)", min_value=1, max_value=10, step=1)
+    quantidade = st.number_input("Digite a **Quantidade** :", step=1)
 
     if st.button("Salvar Produto 📂"):
         params = {
             "nome": nome,
             "categoria": categoria,
             "preco": preco,
-            "avaliacao": avaliacao
+            "quantidade": quantidade
         }
 
-        response = requests.post(f"{API_URL}/estoque", json=params)
+        response = requests.post(f"{API_URL}/estoque", params=params)
         if response.status_code == 200:
             st.success("Produto Adicionado com Sucesso!")
         else:
             st.error("Erro ao Adicionar o Produto")
+
+
+elif menu == "Atualizar Preço do Produto":
+    st.subheader("Atualizar dados de um Produto 📁")
+
+    id_produto = st.number_input("ID do Produto que deseja atualizar", min_value=1, step=1)
+    novo_preco = st.number_input("Nova Preço", min_value=1, max_value=10)
+    if st.button("Atualizar"):
+        dados = {"nova_preco": novo_preco}
+        response = requests.put(f"{API_URL}/estoque/{id_produto}", params=dados)
+        if response.status_code == 200:
+            data = response.json()
+            if "error" in data:
+                st.warning(data["erro"])
+            else:
+                 st.success("Preço atualizado com sucesso")
+        else:
+             st.error("Erro ao atualizar o preço do produto")
