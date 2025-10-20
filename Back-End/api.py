@@ -17,7 +17,7 @@ def home():
         "mensagem": "Bem-Vindo nosso programa de Controle de Produtos e Estoque!"
     }
 
-
+#Listar
 @app.get("/estoque")
 def listar():
     listar = funcao.listar_produtos()
@@ -30,9 +30,11 @@ def listar():
             "preco": linha[3],
             "quantidade": linha[4]
         })
+        
     return {
         "produtos": lista
     }
+
 
 #Adicionar
 @app.post("/estoque")

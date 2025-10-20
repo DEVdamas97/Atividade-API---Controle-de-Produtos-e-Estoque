@@ -26,8 +26,6 @@ def criar_tabela():
             conexao.close()
 
 
-
-
 def listar_produtos():
     conexao, cursor = conectar()
     if conexao:
@@ -113,10 +111,3 @@ def buscar_produto():
         finally:
             cursor.close()
             conexao.close()
-
-
-
-
-
-
-
