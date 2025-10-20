@@ -56,3 +56,21 @@ def deletar_produto(id):
             conexao.close()
 
 
+def listar_produtos():
+    conexao, cursor = conectar()
+    if conexao:
+        try:
+            cursor.execute(
+            """
+            SELECT * FROM estoque ORDER BY id 
+            """
+            )
+            return cursor.fetchall()
+        except Exception as erro:
+            print(f"Erro ao listar os produtos: {erro}")
+            return [
+
+            ]
+        finally:
+            cursor.close()
+            conexao.close()
