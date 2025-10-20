@@ -1,6 +1,7 @@
 
 from conexao import conectar
 
+#Criar Tabela
 def criar_tabela():
     conexao, cursor = conectar()
     if conexao:
@@ -20,6 +21,28 @@ def criar_tabela():
             conexao.commit()
         except Exception as erro:
             print(f"Erro ao inserir {erro}")
+        finally:
+            cursor.close()
+            conexao.close()
+
+
+
+
+def listar_produtos():
+    conexao, cursor = conectar()
+    if conexao:
+        try:
+            cursor.execute(
+            """
+            SELECT * FROM estoque ORDER BY id 
+            """
+            )
+            return cursor.fetchall()
+        except Exception as erro:
+            print(f"Erro ao listar os produtos: {erro}")
+            return [
+
+            ]
         finally:
             cursor.close()
             conexao.close()
@@ -56,21 +79,44 @@ def deletar_produto(id):
             conexao.close()
 
 
-def listar_produtos():
+def atualizar_produto(id_produto, novo_preco):
+    conexao, cursor = conectar()
+    if conexao:
+        try:
+            cursor.execute(
+                "UPDATE estoque SET preco = %s WHERE id = %s",
+                (novo_preco, id_produto)
+                )
+            conexao.commit()            
+        except Exception as erro:
+            print(f"Erro ao atualizar os dados de um produto: {erro}")
+        finally:
+            cursor.close()
+            conexao.close()
+
+
+def buscar_produto():
     conexao, cursor = conectar()
     if conexao:
         try:
             cursor.execute(
             """
-            SELECT * FROM estoque ORDER BY id 
+            SELECT * FROM estoque WHERE id = %s, (id_produto)
             """
             )
             return cursor.fetchall()
         except Exception as erro:
-            print(f"Erro ao listar os produtos: {erro}")
+            print(f"Erro ao listar {erro}")
             return [
 
             ]
         finally:
             cursor.close()
             conexao.close()
+
+
+
+
+
+
+
