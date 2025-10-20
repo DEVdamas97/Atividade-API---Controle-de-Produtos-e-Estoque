@@ -3,6 +3,9 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 
+# Deve entrar na pasta
+# Rodar o fast api = python -m uvicorn api:app --reload
+
 # Instalar o arquiavo requirements.txt
 # pip install requirements.txt
 
