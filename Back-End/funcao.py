@@ -39,3 +39,20 @@ def adicionar_produto(nome, categoria, preco, quantidade):
         finally:
             cursor.close()
             conexao.close()
+
+
+def deletar_produto(id):
+    conexao, cursor = conectar()
+    if conexao:
+        try:
+            cursor.execute(
+                'DELETE FROM estoque WHERE id = %s', (id,)
+            )
+            conexao.commit()
+        except Exception as erro:
+            print(f"Erro ao deletar um produto: {erro}")
+        finally:
+            cursor.close()
+            conexao.close()
+
+
