@@ -25,4 +25,24 @@ if menu == "Listar Produtos":
     else:
         st.error("Erro ao conectar com a API")
 
+elif menu == "Adicionar Produto":
+    st.subheader("➕ Adicionar produto")
 
+    nome = st.text_input("Digite o **Nome do Produto**: ")
+    categoria = st.text_input("Digite a **Categoria do Produto**: ")
+    preco = st.number_input("Digite o **Preço do Produto**: ", step=0.01)
+    avaliacao = st.number_input("Digite a avaliação (1 a 10)", min_value=1, max_value=10, step=1)
+
+    if st.button("Salvar Produto 📂"):
+        params = {
+            "nome": nome,
+            "categoria": categoria,
+            "preco": preco,
+            "avaliacao": avaliacao
+        }
+
+        response = requests.post(f"{API_URL}/estoque", json=params)
+        if response.status_code == 200:
+            st.success("Produto Adicionado com Sucesso!")
+        else:
+            st.error("Erro ao Adicionar o Produto")
