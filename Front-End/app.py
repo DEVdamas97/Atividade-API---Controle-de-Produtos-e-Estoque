@@ -78,11 +78,11 @@ elif menu == "Deletar Produto":
         
         if response.status_code == 200:
             data = response.json()
-            
-            if "mensagem" in data:
+
+            if "error" in data and data["error"] == "Produto não encontrado":
+                st.warning("Produto com esse ID não existe.")
+            elif "mensagem" in data:
                 st.success(data["mensagem"])
-            elif "error" in data:
-                st.warning(data["error"])
             else:
                 st.warning("Resposta inesperada da API.")
         else:
