@@ -45,12 +45,12 @@ def adicionar_produto(nome: str, categoria: str, preco: float, quantidade: int):
 
 #Deletar
 @app.delete("/estoque/{id}")
-def deletar_produto(id_produto:int):
-    funcao.deletar_produto(id_produto)
-    deletar = funcao.deletar_produto()
-    if deletar:
-        funcao.deletar(id_produto)
+def deletar_produto(id: int):
+    try:
+        funcao.deletar_produto(id)
         return {"mensagem": "Produto deletado com sucesso"}
+    except Exception as erro:
+        return {"error": f"Erro ao deletar produto: {erro}"}
     
 
 #Atualizar

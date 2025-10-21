@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-#streamlit run app.py
+# streamlit run app.py
 
 API_URL = "http://127.0.0.1:8000"
 
@@ -11,7 +11,7 @@ st.header("**Gerenciador de Estoque 📦**")
 
 st.subheader("Bem-vindo ao sistema de gerenciamento de Estoque!")
 
-menu = st.sidebar.radio("Opções", ["Listar Produtos", "Adicionar Produto", "Atualizar Preço do Produto"])
+menu = st.sidebar.radio("Opções", ["Listar Produtos", "Adicionar Produto", "Atualizar Preço do Produto", "Deletar Produto"])
 
 if menu == "Listar Produtos":
     st.subheader("Todos Produtos do estoque")
@@ -66,3 +66,24 @@ elif menu == "Atualizar Preço do Produto":
                  st.success("Preço atualizado com sucesso")
         else:
              st.error("Erro ao atualizar o preço do produto")
+
+
+elif menu == "Deletar Produto":
+    st.subheader("Deletar um Produto")
+
+    id = st.number_input("Digite o ID do produto que deseja deletar: ", min_value=1, step=1)
+
+    if st.button("Deletar"):
+        response = requests.delete(f"{API_URL}/estoque/{id}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            
+            if "mensagem" in data:
+                st.success(data["mensagem"])
+            elif "error" in data:
+                st.warning(data["error"])
+            else:
+                st.warning("Resposta inesperada da API.")
+        else:
+            st.error(f"Erro ao deletar o produto. Código: {response.status_code}")
