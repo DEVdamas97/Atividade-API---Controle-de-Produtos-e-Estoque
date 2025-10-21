@@ -1,6 +1,8 @@
 import streamlit as st
 import requests
 
+#streamlit run app.py
+
 API_URL = "http://127.0.0.1:8000"
 
 st.set_page_config(page_title="Gerenciador de Estoques", page_icon="🗄")
@@ -52,9 +54,9 @@ elif menu == "Atualizar Preço do Produto":
     st.subheader("Atualizar dados de um Produto 📁")
 
     id_produto = st.number_input("ID do Produto que deseja atualizar", min_value=1, step=1)
-    novo_preco = st.number_input("Nova Preço", min_value=1, max_value=10)
+    novo_preco = st.number_input("Novo Preço: ", )
     if st.button("Atualizar"):
-        dados = {"nova_preco": novo_preco}
+        dados = {"novo_preco": novo_preco}
         response = requests.put(f"{API_URL}/estoque/{id_produto}", params=dados)
         if response.status_code == 200:
             data = response.json()

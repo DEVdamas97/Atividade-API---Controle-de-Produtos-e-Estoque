@@ -24,7 +24,7 @@ def criar_tabela():
         finally:
             cursor.close()
             conexao.close()
-
+criar_tabela()
 
 def listar_produtos():
     conexao, cursor = conectar()

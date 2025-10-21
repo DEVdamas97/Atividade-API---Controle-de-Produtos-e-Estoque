@@ -5,6 +5,13 @@ import os
 
 # Deve entrar na pasta
 # Rodar o fast api
+
+
+# Baixar o uvicorn
+# pip install uvicorn[standard]
+
+
+# Rodar 
 # python -m uvicorn api:app --reload
 
 # Instalar o arquiavo requirements.txt
@@ -29,4 +36,4 @@ def conectar():
     except Exception as erro:
         print(f"Erro de conexão {erro}")
         return None, None
-
+conectar()
